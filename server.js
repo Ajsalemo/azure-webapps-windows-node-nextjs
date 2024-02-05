@@ -3,7 +3,7 @@ const { parse } = require('url')
 const next = require('next')
 
 const dev = process.env.NODE_ENV !== 'production'
-const hostname = '0.0.0.0'
+const hostname = 'localhost'
 const port = process.env.PORT || 3000
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port })
@@ -15,14 +15,6 @@ app.prepare().then(() => {
             // Be sure to pass `true` as the second argument to `url.parse`.
             // This tells it to parse the query portion of the URL.
             const parsedUrl = parse(req.url, true)
-
-            //   if (pathname === '/about') {
-            //     await app.render(req, res, '/', query)
-            //   } else if (pathname === '/b') {
-            //     await app.render(req, res, '/b', query)
-            //   } else {
-            //     await handle(req, res, parsedUrl)
-            //   }
             await handle(req, res, parsedUrl)
         } catch (err) {
             console.error('Error occurred handling', req.url, err)
