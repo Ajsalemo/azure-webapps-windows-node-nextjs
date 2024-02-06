@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  NEXT_PUBLIC_GITHUB_SHA: "$GITHUB_SHA"
+  NEXT_PUBLIC_GITHUB_SHA: "${{ env.GITHUB_SHA }}"
 
 jobs:
   build:
@@ -28,17 +28,17 @@ jobs:
         run: |
           env
           echo "NEXT_PUBLIC_GITHUB_SHA: ${{ env.NEXT_PUBLIC_GITHUB_SHA }}"
-          npm install
-          npm run build --if-present
+      #     npm install
+      #     npm run build --if-present
 
-      - name: Zip all files for upload between jobs
-        run: Compress-Archive -Path .\* -DestinationPath next.zip
+      # - name: Zip all files for upload between jobs
+      #   run: Compress-Archive -Path .\* -DestinationPath next.zip
     
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: node-app
-          path: next.zip
+      # - name: Upload artifact for deployment job
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: node-app
+      #     path: next.zip
 
   # deploy:
   #   runs-on: ubuntu-latest
