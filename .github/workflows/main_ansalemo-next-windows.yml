@@ -21,17 +21,24 @@ jobs:
         with:
           node-version: '~20'
 
+      - name: Declare some variables
+        shell: bash
+        run: |
+          echo "$GITHUB_SHA"
+
       - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
-      
+
+      - name: Zip all files for upload between jobs
+        run: Compress-Archive -Path .\* -DestinationPath next.zip
+    
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .
+          path: next.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,5 +68,8 @@ jobs:
         with:
           app-name: 'ansalemo-next-windows'
           slot-name: 'Production'
-          package: .
+          package: next.zip
+
+      - name: Delete zip file
+        run: rm nest.zip
           

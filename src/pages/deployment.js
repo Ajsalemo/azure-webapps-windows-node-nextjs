@@ -1,3 +1,3 @@
 export default function Deployment() {
-    return <div>Github Actions - 1</div>
+    return <div>Github Actions - SHA - `${process.env.GITHUB_SHA} ?? No GitHub Actions SHA found`</div>
 }
