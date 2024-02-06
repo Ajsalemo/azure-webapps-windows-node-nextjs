@@ -16,33 +16,33 @@ stages:
     pool:
       vmImage: $(vmImageName)
   
-      steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '20.x'
-        displayName: 'Install Node.js'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+      displayName: 'Install Node.js'
 
-      - script: |
-          echo $NEXT_PUBLIC_GITHUB_SHA
-          npm install
-        displayName: 'npm install'
+    - script: |
+        echo $NEXT_PUBLIC_GITHUB_SHA
+        npm install
+      displayName: 'npm install'
+      
+    - script: |
+        npm run build
+      displayName: 'npm run build'
+      
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
         
-      - script: |
-          npm run build
-        displayName: 'npm run build'
-        
-      - task: ArchiveFiles@2
-        inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-          includeRootFolder: false
-          archiveType: 'zip'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-          replaceExistingArchive: true
-          
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-          ArtifactName: 'drop'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        ArtifactName: 'drop'
 
 - stage: Deploy
   displayName: Deploy stage
