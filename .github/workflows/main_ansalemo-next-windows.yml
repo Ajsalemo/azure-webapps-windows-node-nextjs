@@ -71,5 +71,5 @@ jobs:
           package: next.zip
 
       - name: Delete zip file
-        run: rm nest.zip
+        run: rm next.zip
           
