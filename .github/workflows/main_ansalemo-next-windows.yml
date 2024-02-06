@@ -26,9 +26,9 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          echo "NEXT_PUBLIC_GITHUB_SHA: ${{ env.NEXT_PUBLIC_GITHUB_SHA }}"
           npm install
           npm run build --if-present
-          echo "test: $NEXT_PUBLIC_GITHUB_SHA"
 
       - name: Zip all files for upload between jobs
         run: Compress-Archive -Path .\* -DestinationPath next.zip
