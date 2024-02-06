@@ -26,6 +26,7 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          env
           echo "NEXT_PUBLIC_GITHUB_SHA: ${{ env.NEXT_PUBLIC_GITHUB_SHA }}"
           npm install
           npm run build --if-present
