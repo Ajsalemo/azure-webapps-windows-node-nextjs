@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  NEXT_PUBLIC_GITHUB_SHA: "${{ env.GITHUB_SHA }}"
+  NEXT_PUBLIC_GITHUB_SHA: "${{ github.sha }}"
 
 jobs:
   build:
